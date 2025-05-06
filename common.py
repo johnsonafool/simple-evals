@@ -9,7 +9,7 @@ import numpy as np
 import requests
 from tqdm import tqdm
 
-from .types import EvalResult, Message, SamplerBase, SingleEvalResult
+from custom_types import EvalResult, Message, SamplerBase, SingleEvalResult
 
 QUERY_TEMPLATE_MULTICHOICE = """
 Answer the following multiple choice question. The last line of your response should be of the following format: 'Answer: $LETTER' (without quotes) where LETTER is one of ABCD. Think step by step before answering.
@@ -202,15 +202,25 @@ def aggregate_results(
     )
 
 
-def map_with_progress(f: callable, xs: list[Any], num_threads: int = 50):
+def map_with_progress(f: callable, xs: list[Any], num_threads: int = 50, show_progress: bool = False):
     """
-    Apply f to each element of xs, using a ThreadPool, and show progress.
+    Apply f to each element of xs, using a ThreadPool, with optional progress bar.
+    
+    Args:
+        f: Function to apply to each element
+        xs: List of elements to process
+        num_threads: Number of threads to use
+        show_progress: Whether to show progress bar (default: False)
     """
     if os.getenv("debug"):
-        return list(map(f, tqdm(xs, total=len(xs))))
+        if show_progress:
+            return list(map(f, tqdm(xs, total=len(xs))))
+        return list(map(f, xs))
     else:
         with ThreadPool(min(num_threads, len(xs))) as pool:
-            return list(tqdm(pool.imap(f, xs), total=len(xs)))
+            if show_progress:
+                return list(tqdm(pool.imap(f, xs), total=len(xs)))
+            return list(pool.imap(f, xs))
 
 
 jinja_env = jinja2.Environment(
