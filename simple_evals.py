@@ -17,7 +17,7 @@ from .sampler.chat_completion_sampler import (
 )
 from .sampler.o_chat_completion_sampler import OChatCompletionSampler
 from .sampler.responses_sampler import ResponsesSampler
-from .sampler.claude_sampler import ClaudeCompletionSampler, CLAUDE_SYSTEM_MESSAGE_LMSYS
+# from .sampler.claude_sampler import ClaudeCompletionSampler, CLAUDE_SYSTEM_MESSAGE_LMSYS
 
 
 def main():
@@ -136,10 +136,10 @@ def main():
             system_message=OPENAI_SYSTEM_MESSAGE_CHATGPT,
         ),
        # Claude models:
-        "claude-3-opus-20240229_empty": ClaudeCompletionSampler(
-            model="claude-3-opus-20240229",
-            system_message=CLAUDE_SYSTEM_MESSAGE_LMSYS,
-        ),
+        # "claude-3-opus-20240229_empty": ClaudeCompletionSampler(
+        #     model="claude-3-opus-20240229",
+        #     system_message=CLAUDE_SYSTEM_MESSAGE_LMSYS,
+        # ),
     }
 
     if args.list_models:
