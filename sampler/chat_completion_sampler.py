@@ -1,10 +1,8 @@
-import base64
 import time
 from typing import Any
-import os
 
 import openai
-from openai import OpenAI, AzureOpenAI
+from openai import OpenAI
 
 from custom_types import MessageList, SamplerBase
 

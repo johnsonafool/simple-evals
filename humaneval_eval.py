@@ -4,15 +4,9 @@ Mark Chen and Jerry Tworek and Heewoo Jun and Qiming Yuan and Henrique Ponde de 
 https://arxiv.org/abs/2107.03374 https://github.com/openai/human-eval/ 
 """
 
-import json
-import logging
-import multiprocessing
 import random
 import re
-from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from io import BytesIO
-from typing import Any, Tuple
 
 from human_eval.data import HUMAN_EVAL, read_problems
 from human_eval.evaluation import estimate_pass_at_k

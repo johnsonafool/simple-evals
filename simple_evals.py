@@ -1,16 +1,12 @@
-import json
 import argparse
-import pandas as pd
-import common
 from humaneval_eval import HumanEval
 from sampler.chat_completion_sampler import (
     OPENAI_SYSTEM_MESSAGE_API,
-    OPENAI_SYSTEM_MESSAGE_CHATGPT,
     ChatCompletionSampler,
 )
 
 
-def main(model_name="gpt-4o-mini-2024-07-18", base_url="https://api.openai.com/v1"):
+def custom_simple_evals(model_name="gpt-4o-mini", base_url="https://api.openai.com/v1"):
     parser = argparse.ArgumentParser(
         description="Run sampling and evaluations using different samplers and evaluations."
     )
@@ -53,7 +49,7 @@ def main(model_name="gpt-4o-mini-2024-07-18", base_url="https://api.openai.com/v
         eval_name: get_evals(eval_name, args.debug)
         for eval_name in ["humaneval"]
     }
-    debug_suffix = "_DEBUG" if args.debug else ""
+    # debug_suffix = "_DEBUG" if args.debug else ""
     # print(debug_suffix)
     for model_name, sampler in models.items():
         for eval_name, eval_obj in evals.items():
@@ -67,10 +63,9 @@ def main(model_name="gpt-4o-mini-2024-07-18", base_url="https://api.openai.com/v
         "metrics": metrics,
     }
 
-    print(evaluation_results)
-
+    # {'model': 'gpt-4o-mini-2024-07-18', 'eval_name': 'humaneval', 'metrics': {'pass@1': np.float64(0.8670731707317072), 'pass@1:std': np.float64(0.31256409217825193), 'pass@2': np.float64(0.8890243902439026), 'pass@2:std': np.float64(0.2954971410703084), 'pass@5': np.float64(0.9085365853658537), 'pass@5:std': np.float64(0.2882669915505564), 'score:std': np.float64(0.31256409217825193), 'score': np.float64(0.8670731707317072)}}
     return evaluation_results
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
